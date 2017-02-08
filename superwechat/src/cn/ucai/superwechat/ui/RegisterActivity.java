@@ -14,12 +14,13 @@
 package cn.ucai.superwechat.ui;
 
 import android.app.ProgressDialog;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.EMError;
@@ -60,6 +61,8 @@ public class RegisterActivity extends BaseActivity {
     String username;
     String pwd;
     String usernick;
+    @BindView(R.id.txt_title)
+    TextView mtxtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,8 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.em_activity_register);
         ButterKnife.bind(this);
         mimgBack.setVisibility(View.VISIBLE);
+        mtxtTitle.setVisibility(View.VISIBLE);
+        mtxtTitle.setText(R.string.register);
     }
 
     public void register() {
@@ -187,6 +192,7 @@ public class RegisterActivity extends BaseActivity {
             public void onSuccess(String result) {
                 L.e(TAG, "result=" + result);
             }
+
             @Override
             public void onError(String error) {
                 L.e(TAG, "error=" + error);
