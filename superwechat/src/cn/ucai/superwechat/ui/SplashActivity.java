@@ -7,6 +7,7 @@ import com.hyphenate.chat.EMClient;
 
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.utils.MFGT;
 
 import com.hyphenate.util.EasyUtils;
 
@@ -49,7 +50,7 @@ public class SplashActivity extends BaseActivity {
                         // avoid main screen overlap Calling Activity
                     } else {
                         //enter main screen
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        MFGT.gotoGudie(SplashActivity.this);
                     }
                     finish();
                 } else {
