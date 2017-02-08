@@ -1,14 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splash_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/black" >
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/iv_splash_logo"
         android:layout_width="190px"
         android:layout_height="190px"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="150px"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/icon_logo" />
 </RelativeLayout>
