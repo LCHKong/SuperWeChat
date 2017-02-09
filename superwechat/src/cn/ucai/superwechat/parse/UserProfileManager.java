@@ -2,6 +2,7 @@ package cn.ucai.superwechat.parse;
 
 import android.app.Activity;
 import android.content.Context;
+import android.nfc.Tag;
 
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfileManager {
-
+    private static final String TAG = UserProfileManager.class.getSimpleName();
     /**
      * application context
      */
@@ -154,9 +155,10 @@ public class UserProfileManager {
 
             @Override
             public void onSuccess(EaseUser value) {
+                L.e(TAG, "asyncGetCurrentUserInfo,value=" + value);
                 if (value != null) {
-                    setCurrentUserNick(value.getNick());
-                    setCurrentUserAvatar(value.getAvatar());
+//                    setCurrentUserNick(value.getNick());
+//                    setCurrentUserAvatar(value.getAvatar());
                 }
             }
 
@@ -169,11 +171,14 @@ public class UserProfileManager {
         NetDao.getUserInfoByUserName(activity, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
-                L.e("UserProfileManager", "getUserInfoByUserName,s=" + s);
+                L.e(TAG, "getUserInfoByUserName,s=" + s);
                 if (s != null) {
                     Result result = ResultUtils.getResultFromJson(s, User.class);
                     if (result != null && result.isRetMsg()) {
+                        User user = (User) result.getRetData();
                         // save user info to db
+                        setCurrentUserNick(user.getMUserNick());
+                        setCurrentUserAvatar(user.getAvatar());
                     }
                 }
             }
