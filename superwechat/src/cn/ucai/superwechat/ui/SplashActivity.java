@@ -50,7 +50,7 @@ public class SplashActivity extends BaseActivity {
                         // avoid main screen overlap Calling Activity
                     } else {
                         //enter main screen
-                        MFGT.gotoGudie(SplashActivity.this);
+                        MFGT.gotoMain(SplashActivity.this);
                     }
                     finish();
                 } else {
