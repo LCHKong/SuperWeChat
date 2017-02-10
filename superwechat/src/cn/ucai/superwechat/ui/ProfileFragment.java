@@ -1,6 +1,7 @@
 package cn.ucai.superwechat.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.easemob.redpacketui.utils.RedPacketUtil;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +52,15 @@ public class ProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
+        initData();
+    }
+
+    private void initData() {
+        String username = EMClient.getInstance().getCurrentUser();
+        tvProfileUsername.setText("微信 " + username);
+        EaseUserUtils.setAppUserNick(username, tvProfileNickname);
+        EaseUserUtils.setAppUserAvatar(getContext(), username, ivProfileAvatar);
+
     }
 
     @Override
@@ -65,6 +77,8 @@ public class ProfileFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_profile_view:
+                startActivity(new Intent(getActivity(), UserProfileActivity.class).putExtra("setting", true)
+                        .putExtra("username", EMClient.getInstance().getCurrentUser()));
                 break;
             case R.id.tv_profile_money:
                 RedPacketUtil.startChangeActivity(getContext());
