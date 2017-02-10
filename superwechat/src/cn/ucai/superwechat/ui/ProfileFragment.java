@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.utils.MFGT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +58,7 @@ public class ProfileFragment extends Fragment {
 
     private void initData() {
         String username = EMClient.getInstance().getCurrentUser();
-        tvProfileUsername.setText("微信 " + username);
+        tvProfileUsername.setText("微信号： " + username);
         EaseUserUtils.setAppUserNick(username, tvProfileNickname);
         EaseUserUtils.setAppUserAvatar(getContext(), username, ivProfileAvatar);
 
@@ -84,7 +85,18 @@ public class ProfileFragment extends Fragment {
                 RedPacketUtil.startChangeActivity(getContext());
                 break;
             case R.id.tv_profile_settings:
+                MFGT.gotoSettings(getActivity());
                 break;
         }
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        if(((MainActivity)getActivity()).isConflict){
+//            outState.putBoolean("isConflict", true);
+//        }else if(((MainActivity)getActivity()).getCurrentAccountRemoved()){
+//            outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
+//        }
+//    }
 }
