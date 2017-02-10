@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include android:id="@+id/layout_title" layout="@layout/view_layout_title"/>
+    <include
+        android:id="@+id/layout_title"
+        layout="@layout/view_layout_title" />
+
     <cn.ucai.superwechat.widget.MFViewPager
         android:id="@+id/layout_viewpage"
-        android:layout_below="@id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/layout_title"
         android:paddingBottom="48dp">
     </cn.ucai.superwechat.widget.MFViewPager>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:layout_alignParentBottom="true">
+        android:orientation="vertical">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#D6DCDC"/>
+            android:background="#D6DCDC" />
+
         <cn.ucai.superwechat.widget.DMTabHost
             android:id="@+id/layout_tabhost"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:paddingBottom="1dp">
+
             <cn.ucai.superwechat.widget.DMTabButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -36,6 +42,7 @@
                 app:drawableTop="@drawable/tab_weixin"
                 app:tabtext="@string/app_name">
             </cn.ucai.superwechat.widget.DMTabButton>
+
             <cn.ucai.superwechat.widget.DMTabButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -43,6 +50,7 @@
                 app:drawableTop="@drawable/tab_contact_list"
                 app:tabtext="@string/contacts">
             </cn.ucai.superwechat.widget.DMTabButton>
+
             <cn.ucai.superwechat.widget.DMTabButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,6 +58,7 @@
                 app:drawableTop="@drawable/tab_find"
                 app:tabtext="@string/discover">
             </cn.ucai.superwechat.widget.DMTabButton>
+
             <cn.ucai.superwechat.widget.DMTabButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
