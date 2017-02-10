@@ -80,10 +80,6 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
     MFViewPager layoutViewpage;
     @BindView(R.id.layout_tabhost)
     DMTabHost layoutTabhost;
-    // textview for unread message count
-    private TextView unreadLabel;
-    // textview for unread event message
-    private TextView unreadAddressLable;
 
     private Button[] mTabs;
     private ContactListFragment contactListFragment;
@@ -143,17 +139,13 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
     private void initFrangment() {
         conversationListFragment = new ConversationListFragment();
         contactListFragment = new ContactListFragment();
-        SettingsFragment settingFragment = new SettingsFragment();
-        fragments = new Fragment[]{conversationListFragment, contactListFragment, settingFragment};
-//
-//        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
-//                .add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(conversationListFragment)
-//                .commit();
+        ProfileFragment profileFragment = new ProfileFragment();
+
         adapter = new MainTabAdpter(getSupportFragmentManager());
         adapter.addFragment(conversationListFragment, "微信");
         adapter.addFragment(contactListFragment, "通讯录");
         adapter.addFragment(new DiscoverFragment(), "发现");
-        adapter.addFragment(settingFragment, "我");
+        adapter.addFragment(profileFragment, "我");
         layoutViewpage.setAdapter(adapter);
         layoutTabhost.setChecked(0);
         layoutTabhost.setOnCheckedChangeListener(this);
