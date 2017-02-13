@@ -99,8 +99,8 @@ public interface I {
 	int MSG_LOGIN_SUCCESS							=		107;							//登陆成功
 	int MSG_USER_SAME_NICK							=		108;							//昵称未修改
 	int MSG_USER_UPDATE_NICK_FAIL					=		109;							//昵称修改失败
-	int MSG_USER_SAME_PASSWORD						=		110;							//昵称未修改
-	int MSG_USER_UPDATE_PASSWORD_FAIL				=		111;							//昵称修改失败
+	int MSG_USER_SAME_PASSWORD						=		110;							//密码未修改
+	int MSG_USER_UPDATE_PASSWORD_FAIL				=		111;							//密码修改失败
 	int MSG_LOCATION_UPLOAD_FAIL					=		112;							//用户上传地理位置失败
 	int MSG_LOCATION_UPDATE_FAIL					=		113;							//用户更新地理位置失败
 	int MSG_REGISTER_UPLOAD_AVATAR_FAIL				=		201;							//上传头像失败
