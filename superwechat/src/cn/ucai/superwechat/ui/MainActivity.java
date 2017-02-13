@@ -230,17 +230,19 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
         mTitlePopup.addAction(new ActionItem(this, R.string.menu_money, R.drawable.icon_menu_money));
         mTitlePopup.setItemOnClickListener(listener);
     }
-TitlePopup.OnItemOnClickListener listener = new TitlePopup.OnItemOnClickListener() {
-    @Override
-    public void onItemClick(ActionItem item, int position) {
-        L.e(TAG, "item=" + item + ",position" + position);
-        switch (position) {
-            case 1:
-                MFGT.gotoAddContact(MainActivity.this);
-                break;
+
+    TitlePopup.OnItemOnClickListener listener = new TitlePopup.OnItemOnClickListener() {
+        @Override
+        public void onItemClick(ActionItem item, int position) {
+            L.e(TAG, "item=" + item + ",position" + position);
+            switch (position) {
+                case 1:
+                    MFGT.gotoAddContact(MainActivity.this);
+                    break;
+            }
         }
-    }
-};
+    };
+
     /**
      * on tab clicked
      *
@@ -396,7 +398,7 @@ TitlePopup.OnItemOnClickListener listener = new TitlePopup.OnItemOnClickListener
 
     @Override
     public void onCheckedChange(int checkedPosition, boolean byUser) {
-        layoutViewpage.setCurrentItem(checkedPosition,false);
+        layoutViewpage.setCurrentItem(checkedPosition, false);
     }
 
     // 监听好友变化
