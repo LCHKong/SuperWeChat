@@ -293,6 +293,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                         if (result1.isRetMsg()) {
                             User user = (User) result1.getRetData();
                             if (user != null) {
+                                PreferenceManager.getInstance().setCurrentUserAvatar(user.getAvatar());
+                                L.e(TAG, "user,Avatar=" + user.getAvatar());
                                 SuperWeChatHelper.getInstance().saveAppContact(user);
                                 EaseUserUtils.setAppUserAvatar(UserProfileActivity.this, user.getMUserName(), headAvatar);
                                 CommonUtils.showShortToast(R.string.toast_updatephoto_success);

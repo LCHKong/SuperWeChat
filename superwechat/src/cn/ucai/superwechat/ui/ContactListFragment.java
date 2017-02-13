@@ -233,7 +233,6 @@ public class ContactListFragment extends EaseContactListFragment {
 	/**
 	 * delete contact
 	 * 
-	 * @param toDeleteUser
 	 */
 	public void deleteContact(final EaseUser tobeDeleteUser) {
 		String st1 = getResources().getString(R.string.deleting);
