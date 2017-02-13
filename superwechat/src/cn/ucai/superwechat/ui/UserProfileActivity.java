@@ -15,19 +15,27 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.CompletionInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.C;
 import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
+import com.hyphenate.easeui.utils.EaseImageUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -229,7 +237,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                 break;
             case REQUESTCODE_CUTTING:
                 if (data != null) {
-                    setPicToView(data);
+                    uploadAppUserAvatar(data);
                 }
                 break;
             default:
@@ -265,6 +273,63 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             uploadUserAvatar(Bitmap2Bytes(photo));
         }
 
+    }
+
+    private void uploadAppUserAvatar(Intent picdata) {
+        File file = saveBitmapFile(picdata);
+        L.e(TAG, "file=" + file);
+        if (file == null) {
+            return;
+        }
+        L.e(TAG, "file=" + file.getAbsolutePath());
+        dialog = ProgressDialog.show(this, getString(R.string.dl_update_photo), getString(R.string.dl_waiting));
+        NetDao.updateUserAvatar(this, EMClient.getInstance().getCurrentUser(), file, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                L.e(TAG, "s=" + s);
+                if (s != null) {
+                    Result result1 = ResultUtils.getResultFromJson(s, User.class);
+                    if (result1 != null) {
+                        if (result1.isRetMsg()) {
+                            User user = (User) result1.getRetData();
+                            if (user != null) {
+                                SuperWeChatHelper.getInstance().saveAppContact(user);
+                                EaseUserUtils.setAppUserAvatar(UserProfileActivity.this, user.getMUserName(), headAvatar);
+                                CommonUtils.showShortToast(R.string.toast_updatephoto_success);
+                            }
+                        }
+                    }
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onError(String error) {
+                L.e(TAG, "error=" + error);
+                dialog.dismiss();
+                CommonUtils.showShortToast(R.string.toast_updatephoto_fail);
+            }
+        });
+    }
+
+    private File saveBitmapFile(Intent picdata) {
+        Bundle extras = picdata.getExtras();
+        if (extras != null) {
+            Bitmap bitmap = extras.getParcelable("data");
+            String imagePath = EaseImageUtils.getImagePath(EMClient.getInstance().getCurrentUser() + I.AVATAR_SUFFIX_JPG);
+            File file = new File(imagePath);// 将要保存图片的路径
+            L.e("file path =" + file.getAbsolutePath());
+            try {
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return file;
+        }
+        return null;
     }
 
     private void uploadUserAvatar(final byte[] data) {

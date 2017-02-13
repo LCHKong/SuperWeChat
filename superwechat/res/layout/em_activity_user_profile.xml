@@ -50,9 +50,9 @@
                     android:id="@+id/user_head_headphoto_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/iv_userinfo_avatar"
-                    android:layout_alignBottom="@+id/iv_userinfo_avatar"
-                    android:layout_alignRight="@+id/iv_userinfo_avatar"
+                    android:layout_above="@id/iv_userinfo_avatar"
+                    android:layout_alignBottom="@id/iv_userinfo_avatar"
+                    android:layout_alignRight="@id/iv_userinfo_avatar"
                     android:layout_margin="3dip"
                     android:src="@drawable/em_profile_headphoto_update_icon" />
 
