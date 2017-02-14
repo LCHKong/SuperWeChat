@@ -1373,7 +1373,7 @@ public class SuperWeChatHelper {
      * @return
      */
     public Map<String, User> getAppContactList() {
-        if (isLoggedIn() && appcontactList == null || appcontactList.size() == 0) {
+        if (isLoggedIn() && (appcontactList == null || appcontactList.size() == 0)) {
             appcontactList = demoModel.getAppContactList();
         }
 
