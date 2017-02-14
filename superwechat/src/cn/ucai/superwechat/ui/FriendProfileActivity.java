@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
@@ -19,7 +18,7 @@ import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.utils.MFGT;
 
-public class FriendProfileActivity extends AppCompatActivity {
+public class FriendProfileActivity extends BaseActivity {
 
     @BindView(R.id.img_back)
     ImageView imgBack;
@@ -39,6 +38,7 @@ public class FriendProfileActivity extends AppCompatActivity {
     Button btnSendVideo;
 
     User user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra(I.User.USER_NAME);
         if (user != null) {
             showUserInfo();
-        }else {
+        } else {
             MFGT.finish(this);
         }
     }
@@ -66,7 +66,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         if (isFriend()) {
             btnSendMsg.setVisibility(View.VISIBLE);
             btnSendVideo.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             btnAddContact.setVisibility(View.VISIBLE);
         }
     }
@@ -75,13 +75,21 @@ public class FriendProfileActivity extends AppCompatActivity {
         User u = SuperWeChatHelper.getInstance().getAppContactList().get(user.getMUserName());
         if (u == null) {
             return false;
-        }else {
+        } else {
             SuperWeChatHelper.getInstance().saveAppContact(user);
             return true;
         }
     }
-    @OnClick(R.id.img_back)
-    public void onClick() {
-        MFGT.finish(this);
+
+    @OnClick({R.id.img_back, R.id.btn_add_contact})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_back:
+                MFGT.finish(this);
+                break;
+            case R.id.btn_add_contact:
+                MFGT.gotoAddFriend(this, user.getMUserName());
+                break;
+        }
     }
 }
