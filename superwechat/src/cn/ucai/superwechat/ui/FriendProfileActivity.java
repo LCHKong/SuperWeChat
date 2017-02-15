@@ -116,7 +116,7 @@ public class FriendProfileActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.img_back, R.id.btn_add_contact})
+    @OnClick({R.id.img_back, R.id.btn_add_contact,R.id.btn_send_msg})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -124,6 +124,9 @@ public class FriendProfileActivity extends BaseActivity {
                 break;
             case R.id.btn_add_contact:
                 MFGT.gotoAddFriend(this, user.getMUserName());
+                break;
+            case R.id.btn_send_msg:
+                MFGT.gotoChat(this, user.getMUserName());
                 break;
         }
     }

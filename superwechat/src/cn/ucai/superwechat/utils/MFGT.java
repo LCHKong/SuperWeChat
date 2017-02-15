@@ -11,6 +11,7 @@ import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.ui.AddContactActivity;
 import cn.ucai.superwechat.ui.AddFriendActivity;
+import cn.ucai.superwechat.ui.ChatActivity;
 import cn.ucai.superwechat.ui.FriendProfileActivity;
 import cn.ucai.superwechat.ui.GuideActivity;
 import cn.ucai.superwechat.ui.LoginActivity;
@@ -71,15 +72,22 @@ public class MFGT {
 
     public static void gotoFirent(Activity activity, User user) {
         startActivity(activity, new Intent(activity, FriendProfileActivity.class)
-                .putExtra(I.User.TABLE_NAME,user));
+                .putExtra(I.User.TABLE_NAME, user));
     }
+
     public static void gotoFirent(Activity activity, String username) {
         startActivity(activity, new Intent(activity, FriendProfileActivity.class)
-                .putExtra(I.User.USER_NAME,username));
+                .putExtra(I.User.USER_NAME, username));
     }
 
     public static void gotoAddFriend(Activity activity, String username) {
-        startActivity(activity,new Intent(activity, AddFriendActivity.class)
-        .putExtra(I.User.USER_NAME,username));
+        startActivity(activity, new Intent(activity, AddFriendActivity.class)
+                .putExtra(I.User.USER_NAME, username));
+    }
+
+    public static void gotoChat(Activity activity, String userName) {
+        startActivity(activity, new Intent(activity, ChatActivity.class)
+                .putExtra("userId", userName));
+
     }
 }
