@@ -56,7 +56,7 @@ public class ChatActivity extends BaseActivity{
     @Override
     public void onBackPressed() {
 //        chatFragment.onBackPressed();
-        MFGT.gotoMain(this);
+        MFGT.gotoMainActivity(this);
 //        if (EasyUtils.isSingleActivity(this)) {
 //            Intent intent = new Intent(this, MainActivity.class);
 //            startActivity(intent);
