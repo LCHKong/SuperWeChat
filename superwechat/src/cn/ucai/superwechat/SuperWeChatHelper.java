@@ -822,7 +822,7 @@ public class SuperWeChatHelper {
         user = getContactList().get(username);
         if (user == null && getRobotList() != null) {
             user = getRobotList().get(username);
-    }
+        }
 
         // if user is not in your contacts, set inital letter for him/her
         if (user == null) {
@@ -845,6 +845,7 @@ public class SuperWeChatHelper {
         }
         return user;
     }
+
     /**
      * Global listener
      * If this event already handled by an activity, you don't need handle it again
@@ -1204,6 +1205,40 @@ public class SuperWeChatHelper {
                         notifyContactsSyncListener(false);
                         return;
                     }
+
+                    NetDao.loadContact(appContext, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
+                        @Override
+                        public void onSuccess(String s) {
+                            if (s != null) {
+                                Result result = ResultUtils.getListResultFromJson(s, User.class);
+                                if (result != null && result.isRetMsg()) {
+                                    List<User> list = (List<User>) result.getRetData();
+                                    if (list != null && list.size() > 0) {
+                                        Map<String, User> userMap = new HashMap<String, User>();
+                                        for (User u : list) {
+                                            EaseCommonUtils.setAppUserInitialLetter(u);
+                                            userMap.put(username, u);
+                                        }
+                                        // save the contact list to cache
+                                        getAppContactList().clear();
+                                        getAppContactList().putAll(userMap);
+                                        // save the contact list to database
+                                        UserDao dao = new UserDao(appContext);
+                                        List<User> users = new ArrayList<User>(userMap.values());
+                                        dao.saveAppContactList(list);
+                                        PreferenceManager.getInstance().getCurrentUsername();
+                                        broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+                                    }
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+                        }
+                    });
 
                     Map<String, EaseUser> userlist = new HashMap<String, EaseUser>();
                     for (String username : usernames) {

@@ -51,9 +51,9 @@ public class AddFriendActivity extends AppCompatActivity {
     private void initData() {
         username = getIntent().getStringExtra(I.User.USER_NAME);
         if (username != null) {
-            String nick = SuperWeChatHelper.getInstance().getAppContactList()
-                    .get(EMClient.getInstance().getCurrentUser()).getMUserNick();
-//            String nick = PreferenceManager.getInstance().getCurrentUserNick();
+//            String nick = SuperWeChatHelper.getInstance().getAppContactList()
+//                    .get(EMClient.getInstance().getCurrentUser()).getMUserNick();
+            String nick = PreferenceManager.getInstance().getCurrentUserNick();
             etMsg.setText("我是" + nick);
         } else {
             MFGT.finish(this);

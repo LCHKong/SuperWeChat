@@ -157,8 +157,8 @@ public class UserProfileManager {
             public void onSuccess(EaseUser value) {
                 L.e(TAG, "asyncGetCurrentUserInfo,value=" + value);
                 if (value != null) {
-                    setCurrentUserNick(value.getNick());
-                    setCurrentUserAvatar(value.getAvatar());
+//                    setCurrentUserNick(value.getNick());
+//                    setCurrentUserAvatar(value.getAvatar());
                 }
             }
 

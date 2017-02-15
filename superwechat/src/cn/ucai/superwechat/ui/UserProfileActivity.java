@@ -161,8 +161,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                             if (result != null) {
                                 if (result.isRetMsg()) {
                                     User user = (User) result.getRetData();
+                                    L.e(TAG, "user=" + user);
                                     if (user != null) {
-                                        L.e(TAG, "user=" + user);
                                         PreferenceManager.getInstance().setCurrentUserNick(user.getMUserNick());
                                         SuperWeChatHelper.getInstance().saveAppContact(user);
                                         tvNickName.setText(nickName);
