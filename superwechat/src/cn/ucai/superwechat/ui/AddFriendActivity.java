@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.PreferenceManager;
@@ -52,6 +53,7 @@ public class AddFriendActivity extends AppCompatActivity {
         if (username != null) {
             String nick = SuperWeChatHelper.getInstance().getAppContactList()
                     .get(EMClient.getInstance().getCurrentUser()).getMUserNick();
+//            String nick = PreferenceManager.getInstance().getCurrentUserNick();
             etMsg.setText("我是" + nick);
         } else {
             MFGT.finish(this);
@@ -96,11 +98,6 @@ public class AddFriendActivity extends AppCompatActivity {
         }
 
         progressDialog = new ProgressDialog(this);
-        String stri = getResources().getString(R.string.Is_sending_a_request);
-        progressDialog.setMessage(stri);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-
         new Thread(new Runnable() {
             public void run() {
                 try {
@@ -120,6 +117,7 @@ public class AddFriendActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             String s2 = getResources().getString(R.string.Request_add_buddy_failure);
                             Toast.makeText(getApplicationContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
+                            MFGT.finish(AddFriendActivity.this);
                         }
                     });
                 }
