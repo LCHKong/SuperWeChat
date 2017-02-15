@@ -88,6 +88,5 @@ public class MFGT {
     public static void gotoChat(Activity activity, String userName) {
         startActivity(activity, new Intent(activity, ChatActivity.class)
                 .putExtra("userId", userName));
-
     }
 }
