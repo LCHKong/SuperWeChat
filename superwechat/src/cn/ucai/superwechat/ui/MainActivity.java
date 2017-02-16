@@ -347,11 +347,9 @@ public class MainActivity extends BaseActivity implements DMTabHost.OnCheckedCha
             public void onReceive(Context context, Intent intent) {
                 updateUnreadLabel();
                 updateUnreadAddressLable();
-                if (currentTabIndex == 0) {
-                    // refresh conversation list
-                    if (conversationListFragment != null) {
-                        conversationListFragment.refresh();
-                    }
+                // refresh conversation list
+                if (conversationListFragment != null) {
+                    conversationListFragment.refresh();
                 } else if (currentTabIndex == 1) {
                     if (contactListFragment != null) {
                         contactListFragment.refresh();
