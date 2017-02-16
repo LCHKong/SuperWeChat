@@ -80,7 +80,8 @@ public class User implements Serializable {
     }
 
     public String getMAvatarLastUpdateTime() {
-        return mavatarLastUpdateTime;
+        return mavatarLastUpdateTime == null ?
+                String.valueOf(System.currentTimeMillis()) : mavatarLastUpdateTime;
     }
 
     public void setMAvatarLastUpdateTime(String mavatarLastUpdateTime) {
