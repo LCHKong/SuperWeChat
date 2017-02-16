@@ -80,8 +80,7 @@ public class User implements Serializable {
     }
 
     public String getMAvatarLastUpdateTime() {
-        return mavatarLastUpdateTime == null ?
-                String.valueOf(System.currentTimeMillis()) : mavatarLastUpdateTime;
+        return mavatarLastUpdateTime == null ? "" : mavatarLastUpdateTime;
     }
 
     public void setMAvatarLastUpdateTime(String mavatarLastUpdateTime) {
@@ -124,7 +123,7 @@ public class User implements Serializable {
 
     public String getInitialLetter() {
         if (initialLetter == null) {
-			EaseCommonUtils.setAppUserInitialLetter(this);
+            EaseCommonUtils.setAppUserInitialLetter(this);
         }
         return initialLetter;
     }
