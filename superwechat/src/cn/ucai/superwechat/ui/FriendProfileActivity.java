@@ -1,5 +1,6 @@
 package cn.ucai.superwechat.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -116,7 +117,7 @@ public class FriendProfileActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.img_back, R.id.btn_add_contact,R.id.btn_send_msg})
+    @OnClick({R.id.img_back, R.id.btn_add_contact, R.id.btn_send_msg, R.id.btn_send_video})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -128,6 +129,10 @@ public class FriendProfileActivity extends BaseActivity {
             case R.id.btn_send_msg:
                 MFGT.gotoChat(this, user.getMUserName());
                 break;
+            case R.id.btn_send_video:
+                startActivity(new Intent(this, VoiceCallActivity.class)
+                        .putExtra("username", user.getMUserName())
+                        .putExtra("isComingCall", false));
         }
     }
 }
