@@ -112,10 +112,18 @@ public class NetDao {
                 .addParam(I.Group.OWNER, group.getOwner())
                 .addParam(I.Group.IS_PUBLIC,String.valueOf(group.isPublic()))
                 .addParam(I.Group.ALLOW_INVITES,String .valueOf(group.isAllowInvites()))
-                .targetClass(String.class)
                 .addFile2(file)
+                .targetClass(String.class)
                 .post()
                 .execute(listener);
     }
 
+    public static void addGroupMembers(Context context, String members, String hxid, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBERS)
+                .addParam(I.Member.USER_NAME, members)
+                .addParam(I.Member.GROUP_HX_ID, hxid)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }

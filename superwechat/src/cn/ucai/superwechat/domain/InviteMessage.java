@@ -156,6 +156,23 @@ public class InviteMessage {
 				+ "&updatetime=" + getAvatarTime();
 		return path;
 	}
+
+	@Override
+	public String toString() {
+		return "InviteMessage{" +
+				"from='" + from + '\'' +
+				", time=" + time +
+				", reason='" + reason + '\'' +
+				", status=" + status +
+				", groupId='" + groupId + '\'' +
+				", groupName='" + groupName + '\'' +
+				", groupInviter='" + groupInviter + '\'' +
+				", userNick='" + userNick + '\'' +
+				", avatarSuffix='" + avatarSuffix + '\'' +
+				", avatarTime='" + avatarTime + '\'' +
+				", id=" + id +
+				'}';
+	}
 }
 
 
