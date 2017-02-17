@@ -110,9 +110,13 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 holder.motioned.setVisibility(View.GONE);
             }
             // group message, show group avatar
-            holder.avatar.setImageResource(R.drawable.ease_group_icon);
+//            holder.avatar.setImageResource(R.drawable.ease_group_icon);
+
             EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
             holder.name.setText(group != null ? group.getGroupName() : username);
+
+            EaseUserUtils.setAppGroupAvatar(getContext(), groupId, holder.avatar);
+
         } else if(conversation.getType() == EMConversationType.ChatRoom){
             holder.avatar.setImageResource(R.drawable.ease_group_icon);
             EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(username);

@@ -111,10 +111,30 @@ public class EaseUserUtils {
                 Glide.with(context).load(avatarResId).into(iamgeview);
             } catch (Exception e) {
                 //use default avatar
-                Glide.with(context).load(path).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ease_default_avatar).into(iamgeview);
+                Glide.with(context).load(path).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.default_hd_avatar).into(iamgeview);
             }
         }else{
             Glide.with(context).load(R.drawable.default_hd_avatar).into(iamgeview);
+        }
+    }
+
+    public static String getGroupAvatarPath(String hxid) {
+        String path = "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid="
+                + hxid + "&avatarType=group_icon&m_avatar_suffix=.jpg";
+        return path;
+    }
+
+    public static void setAppGroupAvatar(Context context, String hxid, ImageView iamgeview) {
+        if(hxid != null){
+            try {
+                int avatarResId = Integer.parseInt(getGroupAvatarPath(hxid));
+                Glide.with(context).load(avatarResId).into(iamgeview);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(getGroupAvatarPath(hxid)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ease_group_icon).into(iamgeview);
+            }
+        }else{
+            Glide.with(context).load(R.drawable.ease_group_icon).into(iamgeview);
         }
     }
 }
