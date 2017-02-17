@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -30,16 +31,27 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMGroupManager.EMGroupOptions;
 import com.hyphenate.chat.EMGroupManager.EMGroupStyle;
+import com.hyphenate.easeui.domain.Group;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.exceptions.HyphenateException;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.domain.Result;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
+import cn.ucai.superwechat.utils.CommonUtils;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 
 public class NewGroupActivity extends BaseActivity {
+    private static final String TAG = NewGroupActivity.class.getSimpleName();
 
 
     @BindView(R.id.edit_group_name)
@@ -127,14 +139,9 @@ public class NewGroupActivity extends BaseActivity {
                         EMGroup group = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
 
                         String hxid = group.getGroupId();
+                        createAppGroup(group);
+                        
 
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                progressDialog.dismiss();
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        });
                     } catch (final HyphenateException e) {
                         runOnUiThread(new Runnable() {
                             public void run() {
@@ -149,6 +156,39 @@ public class NewGroupActivity extends BaseActivity {
         }
     }
 
+    private void createAppGroup(EMGroup group) {
+        File file = null;
+        NetDao.createGroup(this, group, file, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (s != null) {
+                    L.e(TAG, "s=" + s);
+                    Result result = ResultUtils.getResultFromJson(s, Group.class);
+                    if (result != null) {
+                        if (result.isRetMsg()) {
+                            createGroupSuccess();
+                        }else {
+                            progressDialog.dismiss();
+                            if (result.getRetCode() == I.MSG_GROUP_HXID_EXISTS) {
+                                CommonUtils.showShortToast("群组环信ID已经存在");
+                            }
+                            if (result.getRetCode() == I.MSG_GROUP_CREATE_FAIL) {
+                                CommonUtils.showShortToast(R.string.Failed_to_create_groups);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                progressDialog.dismiss();
+                L.e(TAG, "error=" + error);
+                CommonUtils.showShortToast(R.string.Failed_to_create_groups);
+            }
+        });
+    }
+
     @OnClick({R.id.ivback, R.id.layout_group_icon})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -158,5 +198,15 @@ public class NewGroupActivity extends BaseActivity {
             case R.id.layout_group_icon:
                 break;
         }
+    }
+
+    public void createGroupSuccess() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 }
