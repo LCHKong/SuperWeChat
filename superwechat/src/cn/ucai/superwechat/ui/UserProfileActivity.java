@@ -229,13 +229,13 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUESTCODE_PICK:
+            case I.REQUESTCODE_PICK:
                 if (data == null || data.getData() == null) {
                     return;
                 }
                 startPhotoZoom(data.getData());
                 break;
-            case REQUESTCODE_CUTTING:
+            case I.REQUESTCODE_CUTTING:
                 if (data != null) {
                     uploadAppUserAvatar(data);
                 }
