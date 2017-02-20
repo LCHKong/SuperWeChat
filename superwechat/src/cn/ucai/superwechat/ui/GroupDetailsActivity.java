@@ -43,6 +43,9 @@ import com.hyphenate.chat.EMPushConfigs;
 
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.net.NetDao;
+import cn.ucai.superwechat.net.OnCompleteListener;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
 
 import com.hyphenate.easeui.utils.EaseUserUtils;
@@ -323,10 +326,23 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
     /**
      * 退出群组
-     *
      */
     private void exitGrop() {
         String st1 = getResources().getString(R.string.Exit_the_group_chat_failure);
+
+        NetDao.removeGroupMember(this, groupId, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                L.e(TAG, "exitGrop,s = " + s);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
+
         new Thread(new Runnable() {
             public void run() {
                 try {
@@ -354,7 +370,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
     /**
      * 解散群组
-     *
      */
     private void deleteGrop() {
         final String st5 = getResources().getString(R.string.Dissolve_group_chat_tofail);
@@ -586,7 +601,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
      * 群组成员gridadapter
      *
      * @author admin_new
-     *
      */
     private class GridAdapter extends ArrayAdapter<String> {
 
@@ -722,6 +736,19 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                         deleteDialog.setMessage(st13);
                         deleteDialog.setCanceledOnTouchOutside(false);
                         deleteDialog.show();
+
+                        NetDao.removeGroupMember(getContext(), groupId, username, new OnCompleteListener<String>() {
+                            @Override
+                            public void onSuccess(String s) {
+                                L.e(TAG, "deleteMembersFromGroup,s = " + s);
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
+
                         new Thread(new Runnable() {
 
                             @Override

@@ -94,7 +94,7 @@ public class NetDao {
     }
 
     public static void removeContact(Context context, String username, String cname,
-                                  OnCompleteListener<String> listener) {
+                                     OnCompleteListener<String> listener) {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DELETE_CONTACT)
                 .addParam(I.Contact.USER_NAME, username)
@@ -110,8 +110,8 @@ public class NetDao {
                 .addParam(I.Group.NAME, group.getGroupName())
                 .addParam(I.Group.DESCRIPTION, group.getDescription())
                 .addParam(I.Group.OWNER, group.getOwner())
-                .addParam(I.Group.IS_PUBLIC,String.valueOf(group.isPublic()))
-                .addParam(I.Group.ALLOW_INVITES,String .valueOf(group.isAllowInvites()))
+                .addParam(I.Group.IS_PUBLIC, String.valueOf(group.isPublic()))
+                .addParam(I.Group.ALLOW_INVITES, String.valueOf(group.isAllowInvites()))
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
@@ -123,6 +123,15 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBERS)
                 .addParam(I.Member.USER_NAME, members)
                 .addParam(I.Member.GROUP_HX_ID, hxid)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
+    public static void removeGroupMember(Context context, String hxid, String username, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_GROUP_MEMBER)
+                .addParam(I.Member.GROUP_HX_ID, hxid)
+                .addParam(I.Member.USER_NAME, username)
                 .targetClass(String.class)
                 .execute(listener);
     }
