@@ -25,6 +25,7 @@ import com.baidu.platform.comapi.map.C;
 import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.adapter.EMANetCallback;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseImageUtils;
@@ -394,5 +395,11 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                         }).setNegativeButton(R.string.dl_cancel, null).show();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        asyncFetchUserInfo(EMClient.getInstance().getCurrentUser());
     }
 }
